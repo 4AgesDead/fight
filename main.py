@@ -7,7 +7,7 @@ pygame.init()
 current_path = os.path.dirname(__file__)
 os.chdir(current_path)
 WIDTH = 1200
-HEIGHT = 800
+HEIGHT =600
 FPS = 60
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
@@ -31,10 +31,12 @@ class BackGroud:
         self.timer +=2
         sc.blit(self.image[self.frame], (0,0))
         if self.timer / FPS > 0.1:
-            self.frame = 0
-        else:
-            self.frame += 1
+            if self.frame == len(self.image) -1:
+                self.frame = 0
+            else:
+                self.frame += 1
         self.timer = 0
+
 class Player_1(pygame.sprite.Sprite):
     def __init__(self,image_lists):
         pygame.sprite.Sprite.__init__(self)
@@ -78,10 +80,11 @@ def restart():
     global  backgroud
     backgroud =BackGroud()
 
+restart()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-    game_lvl()
+    game()
     clock.tick(FPS)
